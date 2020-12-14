@@ -11,7 +11,7 @@ namespace ApplicationCore
         {
             IChallengeService challengeService = new ChallengeService(new MultiplyByLength());
 
-            Console.WriteLine(challengeService.GetOutputData());
+            Console.WriteLine(challengeService.GetChallengeOutputData());
         }
     }
 }

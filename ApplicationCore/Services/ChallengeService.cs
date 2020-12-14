@@ -1,28 +1,58 @@
-﻿using ApplicationCore.Helpers;
+﻿using ApplicationCore.Extensions;
+using ApplicationCore.Helpers;
 using ApplicationCore.Services.Interfaces;
 using Challenges.Abstractions;
+using System.Collections.Generic;
 using System.Text;
 
 namespace ApplicationCore.Services
 {
     internal class ChallengeService : IChallengeService
     {
-        private readonly ChallengeBasedOnArray challengeBasedOnArray;
+        private readonly ChallengeBase challengeBase;
 
-        public ChallengeService(ChallengeBasedOnArray challengeBasedOnArray)
+        public ChallengeService(ChallengeBase challengeBase)
         {
-            this.challengeBasedOnArray = challengeBasedOnArray;
+            this.challengeBase = challengeBase;
         }
 
-        public string GetOutputData()
+        public string GetChallengeOutputData()
         {
             StringBuilder builder = new StringBuilder();
 
-            var value = challengeBasedOnArray.GetChallengeBasedOnArray(new int[] { });
+            foreach (var inputParametersDict in GetInputParameters())
+            {
+                var challengeOutput = challengeBase.GetChallengeOutput(inputParametersDict.Value);
+                builder.AppendLine(OutputFormatHelper.FormatOutput(challengeOutput, RetriveOutputMessage(challengeOutput.Output)));
+            }
 
-            builder.AppendLine(value.ToString());
+            return builder.ToString();
+        }
 
-            return OutputFormatHelper.FormatOutput(builder);
+        private IDictionary<int, object> GetInputParameters()
+        {
+            IDictionary<int, object> inputParametersDict = new Dictionary<int, object>();
+
+            inputParametersDict.Add(1, new int[] { 1 });
+            inputParametersDict.Add(2, new int[] { 2, 4, 3 });
+
+            return inputParametersDict;
+        }
+
+        // TODO Add support for other types
+        private string RetriveOutputMessage(object output)
+        {
+            if (output != null)
+            {
+                var type = output.GetType();
+
+                if (type == typeof(int[]))
+                {
+                    return ((int[])output).ToJoinString();
+                }
+            }
+
+            return output.ToString();
         }
     }
 }

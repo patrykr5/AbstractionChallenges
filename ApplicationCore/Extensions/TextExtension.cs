@@ -1,13 +1,10 @@
-﻿using System;
-using System.Text;
-
-namespace ApplicationCore.Extensions
+﻿namespace ApplicationCore.Extensions
 {
     internal static class TextExtension
     {
-        internal static StringBuilder AppendLine(this StringBuilder stringBuilder, object targetObject)
+        internal static string ToJoinString(this int[] targetObject)
         {
-            return stringBuilder.Append(Environment.NewLine + targetObject);
+            return "[" + string.Join(", ", targetObject) + "]";
         }
     }
 }

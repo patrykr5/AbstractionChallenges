@@ -2,6 +2,6 @@
 {
     internal interface IChallengeService
     {
-        string GetOutputData();
+        string GetChallengeOutputData();
     }
 }
