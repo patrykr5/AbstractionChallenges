@@ -33,8 +33,10 @@ namespace ApplicationCore.Services
         {
             IDictionary<int, object> inputParametersDict = new Dictionary<int, object>();
 
-            inputParametersDict.Add(1, new int[] { 1 });
-            inputParametersDict.Add(2, new int[] { 2, 4, 3 });
+            inputParametersDict.Add(1, new int[] { 2, 3, 1, 0 });
+            inputParametersDict.Add(2, new int[] { 4, 1, 1 });
+            inputParametersDict.Add(3, new int[] { 1, 0, 3, 3, 7, 2, 1 });
+            inputParametersDict.Add(4, new int[] { 0 });
 
             return inputParametersDict;
         }
@@ -52,7 +54,7 @@ namespace ApplicationCore.Services
                 }
             }
 
-            return output.ToString();
+            return string.Empty;
         }
     }
 }
